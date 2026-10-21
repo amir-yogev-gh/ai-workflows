@@ -68,8 +68,15 @@ into the UX Design namespace.
 Using `01-discovery.md` and `02-research.md` when present, propose one or two
 design directions. For each, identify the user needs it prioritizes, the core
 interaction pattern, its tradeoffs, and how it compares with patterns from
-discovery. Present the directions and wait for the researcher to choose or
-suggest another.
+discovery. When the feature modifies existing UI (workspace mode), also
+prepare concrete source examples for affected areas — navigation, scaffolding,
+tables/lists, filters, actions, editors, modals as applicable. Record source
+reference, classify **reuse** or **depart** (record rationale+expected
+treatment). Present both; researcher chooses or suggests.
+After selection, persist that direction's
+examples in **Source Example Baseline** in `prototype-notes.md`; preserve on
+regen/refinement; update on human-approved direction change.
+Standalone: "No source baseline — {reason}".
 
 Settle the create skill's onboarding answers with the researcher:
 
@@ -140,6 +147,12 @@ references and what is explored without source verification.
 Record the chosen strategy and rationale in `prototype-notes.md`.
 
 ### Step 2: Generate the Prototype
+
+Before invoking the create skill, populate **User Stories Covered** in
+`prototype-notes.md` with planned rows from discovery goals, PRD
+requirements, or confirmed decisions; a linked `[UX]` story is not required.
+At least one concrete row required — header/blank/template-only do not
+qualify; if none, derive from inputs or ask researcher.
 
 When invoking the create skill with a workspace (local or Git URL), supply
 the expected discovery baseline SHA as task context alongside the source and
@@ -304,6 +317,23 @@ complete prototype must have:
   served or opened, record the verification as **unverified** with the
   reason rather than claiming completion. Copied unchanged app scaffolding
   alone is not proof that the requested prototype content exists.
+- **Source-conformance check (workspace mode):** Read **Source Example
+  Baseline** from `prototype-notes.md`. If absent or empty (no selected
+  entries), stop — restore at Step 1 gate; do not invent entries or pass empty.
+  Compare rendered prototype against saved record; starts `unverified`;
+  per entry: reuse vs source, depart vs saved expected treatment; write
+  `matched`/`mismatch`/`limited`+Evidence; unavailable → `limited`+reason;
+  never inherit passes or silently rebaseline; refresh each gen/revision;
+  Step 4 preserves.
+- **Coverage update:** If **User Stories Covered** has no concrete rows,
+  stop — return to Step 2 to restore rows then rerun verification;
+  update every row. `verified`
+  requires browser-observed match without stand-in data/interactions.
+  Otherwise-complete flows using stand-ins are `mocked` even if behavior
+  matches — record checks+limits in Evidence (no production claim);
+  `partial`/`deferred`(researcher-approved)/`missing` for gaps/scope
+  (disclose mocks). Surface core gaps at existing gate; never silently
+  complete/drop scope. Recheck previous rows each revision.
 
 Do not diagnose completion or failure from the presence or absence of a
 directory alone. Check for the actual agreed output artifacts.
@@ -415,11 +445,21 @@ Do not invent research evidence.
 |----------|-----------|-------------------|
 | {what} | {why} | {finding or researcher direction} |
 
+## Source Example Baseline
+
+| Area | Source Reference | Classification | Rationale | Expected Treatment | Outcome | Evidence |
+|---|---|---|---|---|---|---|
+| {area} | {frontend-relative path} | {reuse/depart} | {why} | {unchanged/approved change} | {unverified/matched/mismatch/limited} | {observation or reason} |
+
+{Step 1 metadata+treatment; Step 3 outcome/evidence. Standalone: no baseline}
+
 ## User Stories Covered
 
-| Story | Acceptance Criteria | Status |
-|-------|-------------------|--------|
-| {story} | {criteria} | {covered / partial / deferred} |
+| Requirement / Decision | Screen / Control | State / Action | Status | Evidence / Reason |
+|---|---|---|---|---|
+| {source requirement or confirmed decision} | {screen/control} | {state/action} | {planned/verified/mocked/partial/deferred/missing} | {evidence, mock limits, or reason} |
+
+{Steps 2–3.}
 
 ## Page Context
 
